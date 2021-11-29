@@ -1,7 +1,11 @@
 import styled, { css } from 'styled-components';
 
-export const Title = styled.h1`
-  ${({ theme }) => css`
-    color: ${theme.colors.mainBg};
+interface TitleProps {
+  light: boolean;
+}
+
+export const Title = styled.h1<TitleProps>`
+  ${({ theme, light }) => css`
+    color: ${light ? theme.colors.white : theme.colors.primaryColor};
   `}
 `;
