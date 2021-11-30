@@ -3,7 +3,7 @@ import { ThemeProvider } from 'styled-components';
 import { Home } from '.';
 import { theme } from '../../styles/theme';
 
-export const renderTheme = (children: JSX.Element) => {
+export const renderTheme = (children) => {
   return render(<ThemeProvider theme={theme}>{children}</ThemeProvider>);
 };
 
