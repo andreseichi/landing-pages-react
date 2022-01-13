@@ -12,17 +12,19 @@ import { GridContent } from '../../components/GridContent';
 import { GridText } from '../../components/GridText';
 import { GridImage } from '../../components/GridImage';
 
+import config from '../../config';
+
 export function Home() {
   const [data, setData] = useState([]);
   const location = useLocation();
 
   useEffect(() => {
     const pathName = location.pathname.replace(/[^a-z0-9-_]/gi, '');
-    const slug = pathName ? pathName : 'landing-page';
+    const slug = pathName ? pathName : config.defaultSlug;
 
     const load = async () => {
       try {
-        const data = await fetch('http://localhost:1337/pages/?slug=' + slug);
+        const data = await fetch(config.url + slug);
         const json = await data.json();
         const pageData = mapData(json);
 
@@ -34,6 +36,20 @@ export function Home() {
 
     load();
   }, [location]);
+
+  useEffect(() => {
+    if (data === undefined) {
+      document.title = `Página não encontrada | ${config.siteName}`;
+    }
+
+    if (data && !data.slug) {
+      document.title = `Carregando... | ${config.siteName}`;
+    }
+
+    if (data && data.title) {
+      document.title = `${data.title} | ${config.siteName}`;
+    }
+  }, [data]);
 
   if (data === undefined) {
     return <PageNotFound />;
