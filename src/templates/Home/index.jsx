@@ -20,8 +20,6 @@ export function Home() {
     const pathName = location.pathname.replace(/[^a-z0-9-_]/gi, '');
     const slug = pathName ? pathName : 'landing-page';
 
-    console.log(slug);
-
     const load = async () => {
       try {
         const data = await fetch('http://localhost:1337/pages/?slug=' + slug);
@@ -35,7 +33,7 @@ export function Home() {
     };
 
     load();
-  }, []);
+  }, [location]);
 
   if (data === undefined) {
     return <PageNotFound />;
